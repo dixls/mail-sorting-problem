@@ -7,5 +7,9 @@
     "test": "jest"
   },
   "author": "Yara Beadenkopf",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^29.2.1",
+    "parse-email": "^1.0.0"
+  }
 }
