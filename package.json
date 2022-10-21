@@ -1,0 +1,11 @@
+{
+  "name": "fastmail-exercise",
+  "version": "1.0.0",
+  "description": "fastmail's backend dev problem, but in node",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Yara Beadenkopf",
+  "license": "ISC"
+}
