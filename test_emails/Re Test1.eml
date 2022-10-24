@@ -1,0 +1,26 @@
+User-Agent: Cyrus-JMAP/3.7.0-alpha0-1047-g9e4af4ada4-fm-20221005.001-g9e4af4ad
+Mime-Version: 1.0
+X-PersonalityId: 122906768
+Message-Id: <b032ba0d-be82-403b-84aa-1e5793a52636@app.fastmail.com>
+In-Reply-To: <e204b96e-5cb2-428c-9e0e-d200a9a53cd5@app.fastmail.com>
+References: <e204b96e-5cb2-428c-9e0e-d200a9a53cd5@app.fastmail.com>
+Date: Mon, 24 Oct 2022 14:12:12 -0400
+From: bdnkpf <test@beadenkopf.com>
+To: "Yara Beadenkopf" <yara@beadenkopf.com>
+Subject: Re: Test1
+Content-Type: multipart/alternative;
+ boundary=36d3c18eede54214a6c6daf7a650e079
+
+--36d3c18eede54214a6c6daf7a650e079
+Content-Type: text/plain
+
+This is a test reply with quoted text
+
+On Mon, Oct 24, 2022, at 2:10 PM, Yara Beadenkopf wrote:
+> This is the first Test Email
+--36d3c18eede54214a6c6daf7a650e079
+Content-Type: text/html
+
+<!DOCTYPE html><html><head><title></title><style type="text/css">
+p.MsoNormal,p.MsoNoSpacing{margin:0}</style></head><body><div>This is a test reply with quoted text<br></div><div><br></div><div>On Mon, Oct 24, 2022, at 2:10 PM, Yara Beadenkopf wrote:<br></div><blockquote type="cite" id="qt" style=""><div>This is the first Test Email<br></div></blockquote></body></html>
+--36d3c18eede54214a6c6daf7a650e079--
