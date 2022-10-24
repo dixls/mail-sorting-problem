@@ -1,5 +1,12 @@
 # Email Breakdown Sorting and Storing
 
+## To use this program
+
+To read the contents of a directory and sort them to the default output directory:
+``` sh
+npm run sort-email [input directory]
+```
+
 
 ## General Program Notes
 

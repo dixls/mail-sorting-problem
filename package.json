@@ -4,7 +4,8 @@
   "description": "fastmail's backend dev problem, but in node",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "sort-email": "node index.js"
   },
   "author": "Yara Beadenkopf",
   "license": "ISC",
