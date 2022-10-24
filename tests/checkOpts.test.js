@@ -20,5 +20,19 @@ describe("test the checkOpts function", () => {
             checkOpts(testOpts, process.argv)
         }
         expect(noArgs).toThrow('No parameters');
+    });
+    test("test args, but no flags, should pass default operation", () => {
+        const logSpy = jest.spyOn(console, 'log');
+        process.argv = ['node', 'index.js', 'something else'];
+        let next = checkOpts(testOpts, process.argv);
+        next();
+        expect(logSpy).toHaveBeenCalledWith("this is default");
+    });
+    test("test args with valid flag, should pass o1", () => {
+        const logSpy = jest.spyOn(console, 'log');
+        process.argv = ['node', 'index.js', '-o1'];
+        let next = checkOpts(testOpts, process.argv);
+        next();
+        expect(logSpy).toHaveBeenCalledWith("this is option1");
     })
 });
