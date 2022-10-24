@@ -4,7 +4,7 @@
 
 To read the contents of a directory and sort them to the default output directory:
 ``` sh
-npm run sort-email [input directory]
+node index.js [input directory]
 ```
 
 
