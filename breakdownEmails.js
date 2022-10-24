@@ -1,9 +1,9 @@
 const fs = require('fs');
 
-function breakdownEmails (path) {
-    fs.readdir(path, (err, files) => {
+async function getEmails(path) {
+    await fs.readdir(path, (err, files) => {
         if (err) {
-            throw err ("could not read this file path");
+            throw new error("could not read this file path");
         }
 
         files.forEach(file => {
@@ -12,4 +12,4 @@ function breakdownEmails (path) {
     })
 }
 
-module.exports = {breakdownEmails};
+module.exports = { getEmails };

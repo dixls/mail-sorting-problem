@@ -1,5 +1,5 @@
 const { checkOpts } = require("./checkOpts");
-const { breakdownEmails } = require("./breakdownEmails");
+const { getEmails } = require("./breakdownEmails");
 const argv = process.argv;
 
 OUTPUT_DIRECTORY = "/output";
@@ -8,7 +8,7 @@ const opts = {
     default: {
         flag: null,
         description: "takes a filepath to a directory and parses emails found there, sorting into subcomponents and attachments",
-        operation: () => breakdownEmails(argv[2])
+        operation: () => getEmails(argv[2])
     },
     "-r": {
         flag: "-r",

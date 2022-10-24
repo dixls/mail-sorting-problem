@@ -1,3 +1,13 @@
-const breakdownEmails = require('../breakdownEmails');
+const { getEmails } = require('../breakdownEmails');
 
-describe()
+describe("Testing getEmails function", () => {
+
+    test("test provided an invalid path, error thrown, process exited", async () => {
+        try {
+            await getEmails("notARealPath/NothingHere");
+        } catch(e){
+            expect(e).toEqual("could not read this file path");
+        }
+    });
+    
+});
