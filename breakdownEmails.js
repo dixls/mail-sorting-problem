@@ -9,7 +9,7 @@ async function getEmails(path, callback) {
         }
 
         files.forEach(file => {
-            parseEmail(`${path}/${file}`);
+            breakdownEmail(`${path}/${file}`);
         })
     })
 }
@@ -21,7 +21,7 @@ async function parseEmail(filePath) {
 }
 
 async function breakdownEmail(filePath) {
-    const parsed = parseEmail(filePath);
+    const parsed = await parseEmail(filePath);
     const generatedName = nameGenerator(parsed);
     
 }
