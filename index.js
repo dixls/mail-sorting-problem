@@ -7,13 +7,14 @@ const opts = {
     default: {
         flag: null,
         description: "takes a filepath to a directory and parses emails found there, sorting into subcomponents and attachments",
-        operation: null
+        operation: () => console.log("this is default")
     },
-    read: {
+    "-r": {
         flag: "-r",
         description: "takes a filepath to a directory and reads the parsed email and returns information about that email",
-        operation: null
+        operation: () => console.log("this is the read operation")
     }
 }
 
-checkOpts(opts);
+let next = checkOpts(opts);
+next();
