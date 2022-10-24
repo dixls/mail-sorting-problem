@@ -1,5 +1,5 @@
-const dotenv = require("dotenv");
 const { checkOpts } = require("./checkOpts");
+const argv = process.argv;
 
 OUTPUT_DIRECTORY = "/output";
 
@@ -16,5 +16,5 @@ const opts = {
     }
 }
 
-let next = checkOpts(opts);
+let next = checkOpts(opts, argv);
 next();

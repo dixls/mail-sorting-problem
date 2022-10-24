@@ -1,6 +1,4 @@
-const argv = process.argv;
-
-function checkOpts(opts) {
+function checkOpts(opts, argv) {
     /**
      * Checks arg flags and manages help menu
      * @param {object} opts - An object with the options available to the user, must follow the convention below
@@ -21,7 +19,7 @@ function checkOpts(opts) {
     const optFlags = optKeys.map(opt => opts[opt].flag);
 
     if (!argv[2]) {
-        console.log(
+        throw new Error(
             `No parameters received, to see how to use this program run
             
             node index.js --help`

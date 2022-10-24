@@ -1,6 +1,6 @@
 const { checkOpts } = require("../checkOpts");
 
-describe("test the checkOpts function", function () {
+describe("test the checkOpts function", () => {
     const testOpts = {
         default: {
             flag: null,
@@ -14,5 +14,11 @@ describe("test the checkOpts function", function () {
         },
     };
 
-    
+    test("test no additional args, should end with error and message", () => {
+        process.argv = ['node', 'index.js'];
+        const noArgs = () => {
+            checkOpts(testOpts, process.argv)
+        }
+        expect(noArgs).toThrow('No parameters');
+    })
 });
