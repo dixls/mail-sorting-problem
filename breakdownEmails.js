@@ -1,19 +1,20 @@
 const fs = require('fs');
 const parse = require('parse-email');
 const { nameGenerator } = require('./nameGenerator');
+const makeManifest = require('./makeManifest');
 
 const outputPath = process.env.OUTPUT_DIRECTORY;
 
-async function getEmails(path, callback) {
-    await fs.readdir(path, (err, files) => {
-        if (err) {
-            throw new Error("could not read this file path");
-        }
-
+function getEmails(path, callback) {
+    try {
+        const files = fs.readdirSync(path)
         files.forEach(file => {
-            breakdownEmail(`${path}/${file}`);
-        })
-    })
+            callback(`${path}/${file}`);
+        });
+    } catch (err) {
+        console.error("could not read this file path", err);
+        process.exit(1);
+    }
 }
 
 function makeDirectory(directoryPath) {
@@ -36,7 +37,7 @@ function writeBody(parsedEmail, directoryPath) {
     }
 }
 
-function writeFiles(parsedEmail, directoryPath, generatedName, fileToWrite) {
+function writeFiles(directoryPath, generatedName, fileToWrite) {
     try {
         fs.writeFileSync(`${directoryPath}/${generatedName}_${fileToWrite.filename}`, fileToWrite.content, fileToWrite.headers['content-transfer-encoding'])
     } catch (err) {
@@ -46,7 +47,7 @@ function writeFiles(parsedEmail, directoryPath, generatedName, fileToWrite) {
 }
 
 async function parseEmail(filePath) {
-    const emailString = await fs.readFileSync(filePath, 'utf8');
+    const emailString = fs.readFileSync(filePath, 'utf8');
     const parsedEmail = await parse(emailString);
     return parsedEmail;
 }
@@ -57,15 +58,14 @@ async function breakdownEmail(filePath) {
     const directoryPath = `${outputPath}${generatedName}`;
     makeDirectory(directoryPath);
     writeBody(parsed, directoryPath);
-    if(parsed.attachments){
-        parsed.attachments.map(file => writeFiles(parsed, directoryPath, generatedName, file))
+    if (parsed.attachments) {
+        parsed.attachments.map(file => writeFiles(directoryPath, generatedName, file))
     }
-    console.log(parsed.attachments);
 
 }
 
-async function breakdownEmails(path) {
+function breakdownEmails(path) {
     getEmails(path, breakdownEmail);
 }
 
-module.exports = { breakdownEmails };
+module.exports = { breakdownEmails, getEmails, makeDirectory, writeBody, writeFiles, parseEmail, breakdownEmail };
