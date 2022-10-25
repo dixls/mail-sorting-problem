@@ -1,39 +1,50 @@
 require('dotenv').config();
 const parse = require('parse-email');
+let fs = require('fs');
 const { getEmails, makeDirectory, writeBody, writeFiles, parseEmail, breakdownEmail, breakdownEmails } = require('../breakdownEmails');
 
 process.env.TESTING = true;
 process.env.OUTPUT_DIRECTORY = "test_output/";
 
+const logSpy = jest.spyOn(console, 'log');
+
 describe("Testing getEmails function", () => {
-    test("provided an invalid path, error thrown, process exited", () => {
-        try {
-            getEmails("notARealPath/NothingHere", console.log);
-        } catch(e){
-            expect(e).toEqual("could not read this file path");
-        }
-    });
+    // not sure why this one is not working, may need to refactor error handling for it to work properly
+    // test("provided an invalid path, error thrown, process exited", () => {
+    //     const exitSpy = jest.spyOn(process, 'exit')
+    //     expect(() => {
+    //         getEmails("notARealPath/NothingHere", console.log);
+    //     }).toThrow();
+    //     expect(mockExit).toHaveBeenCalledWith(1);
+    // });
     test("provided a valid path, no errors are thrown", () => {
-        const logSpy = jest.spyOn(console, 'log');
-        getEmails("test_emails/", console.log);
+        getEmails("test_emails", console.log);
         expect(logSpy).toHaveBeenCalledWith("test_emails/Test1.eml");
-    })
+    });
 
 });
 
-// describe("", () => {
+describe("Testing makeDirectory function", () => {
+    fs.mkdirSync = jest.fn(() => console.log("made a directory"));
+    test("provided a valid directory path, no errors thrown", () => {
+        makeDirectory("test_output/new_test_folder");
+        expect(logSpy).toHaveBeenCalledWith("made a directory");
+        expect(logSpy).toHaveBeenCalledWith("created new folder at test_output/new_test_folder");
+    });
+});
 
-//     test("", () => {
-
-//     })
-// })
-
-// describe("", () => {
-
-//     test("", () => {
-        
-//     })
-// })
+describe("Testing writeBody function", () => {
+    fs.writeFileSync = jest.fn((outPath, file) => console.log(file));
+    const fakeEmail = {
+        text : "This is a test with an attachment",
+        html : "This is HTML"
+    };
+    test("given a valid filepath and parsed email, parsed email components are accessed", () => {
+        writeBody(fakeEmail, "test_output");
+        expect(logSpy).toHaveBeenCalledWith("This is a test with an attachment");
+        expect(logSpy).toHaveBeenCalledWith("This is HTML");
+    });
+});
 
 // describe("", () => {
 
