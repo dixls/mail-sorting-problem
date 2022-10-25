@@ -1,11 +1,12 @@
+require('dotenv').config();
 const { checkOpts } = require("./checkOpts");
 const { breakdownEmails } = require("./breakdownEmails");
 const argv = process.argv;
 
 if(process.env.TESTING == true) {
-    process.env.OUTPUT_DIRECTORY = "/test_output";
+    process.env.OUTPUT_DIRECTORY = "test_output/";
 } else {
-    process.env.OUTPUT_DIRECTORY = "/output";
+    process.env.OUTPUT_DIRECTORY = "output/";
 }
 
 const opts = {

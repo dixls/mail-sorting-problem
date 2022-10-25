@@ -5,7 +5,6 @@ function nameGenerator(parsedEmail) {
     const messageId = parsedEmail.messageId.replace(/\W/g, '');
     
     const generatedName = fromAddress+toAddress+subject+messageId;
-
     return generatedName;
 };
 

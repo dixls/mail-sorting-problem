@@ -19,7 +19,7 @@ function checkOpts(opts, argv) {
     const optFlags = optKeys.map(opt => opts[opt].flag);
 
     if (!argv[2]) {
-        throw new Error(
+        console.error(
             `No parameters received, to see how to use this program run
             
             node index.js --help`

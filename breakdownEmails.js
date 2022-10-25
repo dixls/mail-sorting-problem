@@ -7,7 +7,7 @@ const outputPath = process.env.OUTPUT_DIRECTORY;
 async function getEmails(path, callback) {
     await fs.readdir(path, (err, files) => {
         if (err) {
-            throw new error("could not read this file path", err);
+            throw new Error("could not read this file path");
         }
 
         files.forEach(file => {
@@ -19,9 +19,29 @@ async function getEmails(path, callback) {
 async function makeDirectory(directoryPath) {
     await fs.mkdir(directoryPath, (err) => {
         if (err) {
-            throw new error("could not create directory", err)
+            console.error("could not create directory", err)
+            process.exit(1);
         }
     })
+    console.log(`created new folder at ${directoryPath}`)
+}
+
+async function writeBody(parsedEmail, directoryPath) {
+    await fs.writeFile(`${directoryPath}/body.txt`, parsedEmail.text, 'utf8', (err) => {
+        if (err) {
+            console.log(typeof parsedEmail.text);
+            console.error(`error writing body.txt to ${directoryPath}`, err);
+            process.exit(1);
+        }
+    });
+    await fs.writeFile(`${directoryPath}/body.htm`, parsedEmail.html, 'utf8', (err) => {
+        if (err) {
+            console.log(parsedEmail.html);
+            console.error(`error writing body.htm to ${directoryPath}`, err);
+            process.exit(1);
+        }
+    });
+
 }
 
 async function parseEmail(filePath) {
@@ -33,9 +53,9 @@ async function parseEmail(filePath) {
 async function breakdownEmail(filePath) {
     const parsed = await parseEmail(filePath);
     const generatedName = nameGenerator(parsed);
-    const directoryPath = `${outputPath}/${generatedName}`;
+    const directoryPath = `${outputPath}${generatedName}`;
     await makeDirectory(directoryPath);
-    //TODO: keep doing along app flow, creating files etc.
+    await writeBody(parsed, directoryPath);
 
 }
 

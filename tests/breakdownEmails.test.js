@@ -1,4 +1,8 @@
+require('dotenv').config();
 const { getEmails } = require('../breakdownEmails');
+
+process.env.TESTING = true;
+process.env.OUTPUT_DIRECTORY = "test_output/";
 
 describe("Testing getEmails function", () => {
 
@@ -13,6 +17,6 @@ describe("Testing getEmails function", () => {
 });
 
 describe("Test breakdownEmails function", () => {
-    const valid
+    const validEmailPath = "test_emails/test1.eml";
     test("")
 });

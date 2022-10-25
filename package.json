@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "sort-email": "node index.js"
+    "sort-email": "node index.js --"
   },
   "author": "Yara Beadenkopf",
   "license": "ISC",
