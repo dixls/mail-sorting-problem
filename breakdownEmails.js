@@ -36,6 +36,15 @@ function writeBody(parsedEmail, directoryPath) {
     }
 }
 
+function writeFiles(parsedEmail, directoryPath, generatedName, fileToWrite) {
+    try {
+        fs.writeFileSync(`${directoryPath}/${generatedName}_${fileToWrite.filename}`, fileToWrite.content, fileToWrite.headers['content-transfer-encoding'])
+    } catch (err) {
+        console.error(`error writing files`, err);
+        process.exit(1);
+    }
+}
+
 async function parseEmail(filePath) {
     const emailString = await fs.readFileSync(filePath, 'utf8');
     const parsedEmail = await parse(emailString);
@@ -48,6 +57,10 @@ async function breakdownEmail(filePath) {
     const directoryPath = `${outputPath}${generatedName}`;
     makeDirectory(directoryPath);
     writeBody(parsed, directoryPath);
+    if(parsed.attachments){
+        parsed.attachments.map(file => writeFiles(parsed, directoryPath, generatedName, file))
+    }
+    console.log(parsed.attachments);
 
 }
 
