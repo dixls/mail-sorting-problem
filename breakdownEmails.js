@@ -6,6 +6,10 @@ const makeManifest = require('./makeManifest');
 
 const outputPath = process.env.OUTPUT_DIRECTORY;
 
+if (!fs.existsSync(outputPath)){
+    fs.mkdirSync(outputPath);
+};
+
 async function getEmails(path, callback) {
     try {
         const files = fs.readdirSync(path)
