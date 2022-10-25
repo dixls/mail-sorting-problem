@@ -32,6 +32,7 @@ function writeBody(parsedEmail, directoryPath) {
     try {
         fs.writeFileSync(`${directoryPath}/body.txt`, parsedEmail.text, 'utf8');
         fs.writeFileSync(`${directoryPath}/body.htm`, parsedEmail.html, 'utf8');
+        console.log(`wrote body files to ${directoryPath}`);
     } catch (err) {
         console.error(`error writing files`, err);
         process.exit(1);
@@ -41,6 +42,7 @@ function writeBody(parsedEmail, directoryPath) {
 function writeFiles(directoryPath, generatedName, fileToWrite) {
     try {
         fs.writeFileSync(`${directoryPath}/${generatedName}_${fileToWrite.filename}`, fileToWrite.content, fileToWrite.headers['content-transfer-encoding'])
+        console.log(`wrote attachment files to ${directoryPath}`);
     } catch (err) {
         console.error(`error writing files`, err);
         process.exit(1);

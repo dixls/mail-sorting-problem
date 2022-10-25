@@ -28,7 +28,7 @@ describe("Testing getEmails function", () => {
 describe("Testing makeDirectory function", () => {
     fs.mkdirSync = jest.fn(() => console.log("made a directory"));
     afterAll(() => {
-        fs.mkdirSync.mockReset();
+        fs.mkdirSync.mockRestore();
     })
     test("provided a valid directory path, no errors thrown", () => {
         makeDirectory("test_output/new_test_folder");
@@ -44,7 +44,7 @@ describe("Testing writeBody function", () => {
         html : "This is HTML"
     };
     afterAll(() => {
-        fs.writeFileSync.mockReset();
+        fs.writeFileSync.mockRestore();
     })
     test("given a valid filepath and parsed email, parsed email components are accessed", () => {
         writeBody(fakeEmail, outDir);
@@ -53,38 +53,24 @@ describe("Testing writeBody function", () => {
     });
 });
 
-// describe("", () => {
-
-//     test("", () => {
-        
-//     })
-// })
-
-// describe("", () => {
-
-//     test("", () => {
-        
-//     })
-// })
-
 describe("Test breakdownEmail function", () => {
     const validEmailPath = "test_emails/test2.eml";
+    /**
+     * This is failing for a few reasons, the mocks for fs functions aren't being restored properly
+     * need to refactor the mocks using a different method to fix this.
+     * also the output directory env isn't being used the way I thought it should, not sure why this is.
+     *  */
+    
     // afterEach(() => {
     //     fs.rmSync(outDir, {recursive: true, force: true});
     //     fs.mkdirSync("test_output");
     // })
     test("provided a valid email path, correct files are created in the correct location", async () => {
-        
+        jest.restoreAllMocks();
         await breakdownEmail(validEmailPath);
         const emailDirName = "yarabeadenkopfcomtestbeadenkopfcomtest2ffcd08ee662c454a9f1b2c7c17920f54appfastmailcom";
-        const body = fs.readFileSync(`test_output/${emailDirName}/body.txt`);
+        const body = fs.readFileSync(`output/${emailDirName}/body.txt`);
         expect(body).toContain("This is a test with an attachment");
     })
 });
 
-// describe("", () => {
-
-//     test("", () => {
-        
-//     })
-// })
