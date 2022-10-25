@@ -2,7 +2,11 @@ const { checkOpts } = require("./checkOpts");
 const { breakdownEmails } = require("./breakdownEmails");
 const argv = process.argv;
 
-OUTPUT_DIRECTORY = "/output";
+if(process.env.TESTING == true) {
+    process.env.OUTPUT_DIRECTORY = "/test_output";
+} else {
+    process.env.OUTPUT_DIRECTORY = "/output";
+}
 
 const opts = {
     default: {

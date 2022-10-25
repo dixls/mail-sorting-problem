@@ -11,3 +11,8 @@ describe("Testing getEmails function", () => {
     });
     
 });
+
+describe("Test breakdownEmails function", () => {
+    const valid
+    test("")
+});
