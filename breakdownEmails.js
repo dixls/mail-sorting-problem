@@ -1,4 +1,5 @@
 const fs = require('fs');
+require('dotenv').config();
 const parse = require('parse-email');
 const { nameGenerator } = require('./nameGenerator');
 const makeManifest = require('./makeManifest');

@@ -5,6 +5,7 @@ const { getEmails, makeDirectory, writeBody, writeFiles, parseEmail, breakdownEm
 
 process.env.TESTING = true;
 process.env.OUTPUT_DIRECTORY = "test_output/";
+const outDir = process.env.OUTPUT_DIRECTORY;
 
 const logSpy = jest.spyOn(console, 'log');
 
@@ -26,6 +27,9 @@ describe("Testing getEmails function", () => {
 
 describe("Testing makeDirectory function", () => {
     fs.mkdirSync = jest.fn(() => console.log("made a directory"));
+    afterAll(() => {
+        fs.mkdirSync.mockReset();
+    })
     test("provided a valid directory path, no errors thrown", () => {
         makeDirectory("test_output/new_test_folder");
         expect(logSpy).toHaveBeenCalledWith("made a directory");
@@ -39,8 +43,11 @@ describe("Testing writeBody function", () => {
         text : "This is a test with an attachment",
         html : "This is HTML"
     };
+    afterAll(() => {
+        fs.writeFileSync.mockReset();
+    })
     test("given a valid filepath and parsed email, parsed email components are accessed", () => {
-        writeBody(fakeEmail, "test_output");
+        writeBody(fakeEmail, outDir);
         expect(logSpy).toHaveBeenCalledWith("This is a test with an attachment");
         expect(logSpy).toHaveBeenCalledWith("This is HTML");
     });
@@ -60,12 +67,20 @@ describe("Testing writeBody function", () => {
 //     })
 // })
 
-// describe("Test breakdownEmail function", () => {
-//     const validEmailPath = "test_emails/test2.eml";
-//     test("provided a valid email path, " () => {
-
-//     })
-// });
+describe("Test breakdownEmail function", () => {
+    const validEmailPath = "test_emails/test2.eml";
+    // afterEach(() => {
+    //     fs.rmSync(outDir, {recursive: true, force: true});
+    //     fs.mkdirSync("test_output");
+    // })
+    test("provided a valid email path, correct files are created in the correct location", async () => {
+        
+        await breakdownEmail(validEmailPath);
+        const emailDirName = "yarabeadenkopfcomtestbeadenkopfcomtest2ffcd08ee662c454a9f1b2c7c17920f54appfastmailcom";
+        const body = fs.readFileSync(`test_output/${emailDirName}/body.txt`);
+        expect(body).toContain("This is a test with an attachment");
+    })
+});
 
 // describe("", () => {
 
