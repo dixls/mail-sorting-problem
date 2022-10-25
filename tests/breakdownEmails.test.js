@@ -10,7 +10,9 @@ const outDir = process.env.OUTPUT_DIRECTORY;
 const logSpy = jest.spyOn(console, 'log');
 
 describe("Testing getEmails function", () => {
-    // not sure why this one is not working, may need to refactor error handling for it to work properly
+    /** 
+     * not sure why this one is not working, may need to refactor error handling for it to work properly
+     */
     // test("provided an invalid path, error thrown, process exited", () => {
     //     const exitSpy = jest.spyOn(process, 'exit')
     //     expect(() => {
