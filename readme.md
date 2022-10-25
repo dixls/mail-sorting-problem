@@ -2,9 +2,26 @@
 
 ## To use this program
 
+First setup the local node environment with
+```
+npm install
+```
+
+and create a local `.env` file that contains the following
+```
+TESTING = false
+OUTPUT_DIRECTORY = "output/"
+```
+You should now be able to use the app locally
+
 To read the contents of a directory and sort them to the default output directory:
-``` sh
+```
 node index.js [input directory]
+```
+
+Included in this repository is a folder of test emails so you can test the app functionality with
+```
+node index.js text_emails
 ```
 
 
@@ -32,6 +49,10 @@ node index.js [input directory]
   - create generated name for attachments
   - write attachments with generated name
   - write `manifest`
-- Show message indicating successful completion with path to output directory
+
+## Next steps
+
+- `-r` functionality to yield information about an already parsed email has not been implemented
+- tests are not very thorough. some need to be refactored
 
 

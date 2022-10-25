@@ -6,11 +6,11 @@ const makeManifest = require('./makeManifest');
 
 const outputPath = process.env.OUTPUT_DIRECTORY;
 
-function getEmails(path, callback) {
+async function getEmails(path, callback) {
     try {
         const files = fs.readdirSync(path)
-        files.forEach(file => {
-            callback(`${path}/${file}`);
+        files.forEach(async file => {
+            return await callback(`${path}/${file}`);
         });
     } catch (err) {
         console.error("could not read this file path", err);
@@ -41,8 +41,13 @@ function writeBody(parsedEmail, directoryPath) {
 
 function writeFiles(directoryPath, generatedName, fileToWrite) {
     try {
-        fs.writeFileSync(`${directoryPath}/${generatedName}_${fileToWrite.filename}`, fileToWrite.content, fileToWrite.headers['content-transfer-encoding'])
-        console.log(`wrote attachment files to ${directoryPath}`);
+        if (fileToWrite.headers) {
+            fs.writeFileSync(`${directoryPath}/${generatedName}_${fileToWrite.filename}`, fileToWrite.content, fileToWrite.headers['content-transfer-encoding'])
+            console.log(`wrote attachment file to ${directoryPath}`);
+        } else {
+            fs.writeFileSync(`${directoryPath}/${generatedName}_${fileToWrite.filename}`, fileToWrite.content)
+            console.log(`wrote manifest file to ${directoryPath}`);
+        }
     } catch (err) {
         console.error(`error writing files`, err);
         process.exit(1);
@@ -64,11 +69,13 @@ async function breakdownEmail(filePath) {
     if (parsed.attachments) {
         parsed.attachments.map(file => writeFiles(directoryPath, generatedName, file))
     }
-
+    const manifest = makeManifest(parsed, filePath);
+    writeFiles(directoryPath, generatedName, manifest);
+    return true;
 }
 
-function breakdownEmails(path) {
-    getEmails(path, breakdownEmail);
+async function breakdownEmails(path) {
+    await getEmails(path, breakdownEmail);
 }
 
 module.exports = { breakdownEmails, getEmails, makeDirectory, writeBody, writeFiles, parseEmail, breakdownEmail };
