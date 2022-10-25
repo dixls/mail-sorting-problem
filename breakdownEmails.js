@@ -16,32 +16,24 @@ async function getEmails(path, callback) {
     })
 }
 
-async function makeDirectory(directoryPath) {
-    await fs.mkdir(directoryPath, (err) => {
-        if (err) {
-            console.error("could not create directory", err)
-            process.exit(1);
-        }
-    })
+function makeDirectory(directoryPath) {
+    try {
+        fs.mkdirSync(directoryPath);
+    } catch (err) {
+        console.error("could not create directory", err)
+        process.exit(1);
+    }
     console.log(`created new folder at ${directoryPath}`)
 }
 
-async function writeBody(parsedEmail, directoryPath) {
-    await fs.writeFile(`${directoryPath}/body.txt`, parsedEmail.text, 'utf8', (err) => {
-        if (err) {
-            console.log(typeof parsedEmail.text);
-            console.error(`error writing body.txt to ${directoryPath}`, err);
-            process.exit(1);
-        }
-    });
-    await fs.writeFile(`${directoryPath}/body.htm`, parsedEmail.html, 'utf8', (err) => {
-        if (err) {
-            console.log(parsedEmail.html);
-            console.error(`error writing body.htm to ${directoryPath}`, err);
-            process.exit(1);
-        }
-    });
-
+function writeBody(parsedEmail, directoryPath) {
+    try {
+        fs.writeFileSync(`${directoryPath}/body.txt`, parsedEmail.text, 'utf8');
+        fs.writeFileSync(`${directoryPath}/body.htm`, parsedEmail.html, 'utf8');
+    } catch (err) {
+        console.error(`error writing files`, err);
+        process.exit(1);
+    }
 }
 
 async function parseEmail(filePath) {
@@ -54,8 +46,8 @@ async function breakdownEmail(filePath) {
     const parsed = await parseEmail(filePath);
     const generatedName = nameGenerator(parsed);
     const directoryPath = `${outputPath}${generatedName}`;
-    await makeDirectory(directoryPath);
-    await writeBody(parsed, directoryPath);
+    makeDirectory(directoryPath);
+    writeBody(parsed, directoryPath);
 
 }
 
